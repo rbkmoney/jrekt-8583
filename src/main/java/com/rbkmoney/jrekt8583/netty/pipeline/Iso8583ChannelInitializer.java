@@ -18,16 +18,12 @@ package com.rbkmoney.jrekt8583.netty.pipeline;
 
 import com.rbkmoney.jrekt8583.ConnectorConfiguration;
 import com.rbkmoney.jrekt8583.ConnectorConfigurer;
+import com.rbkmoney.jrekt8583.netty.codec.HeaderLengthDecoder;
 import com.rbkmoney.jrekt8583.netty.codec.Iso8583Decoder;
 import com.rbkmoney.jrekt8583.netty.codec.Iso8583Encoder;
 import com.solab.iso8583.MessageFactory;
 import io.netty.bootstrap.AbstractBootstrap;
-import io.netty.channel.Channel;
-import io.netty.channel.ChannelHandler;
-import io.netty.channel.ChannelInitializer;
-import io.netty.channel.ChannelPipeline;
-import io.netty.channel.EventLoopGroup;
-import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
+import io.netty.channel.*;
 import io.netty.handler.logging.LogLevel;
 import io.netty.handler.timeout.IdleStateHandler;
 
@@ -68,10 +64,8 @@ public class Iso8583ChannelInitializer<
         final ChannelPipeline pipeline = ch.pipeline();
 
         final int lengthFieldLength = configuration.getFrameLengthFieldLength();
-        pipeline.addLast("lengthFieldFameDecoder",
-            new LengthFieldBasedFrameDecoder(
-                configuration.getMaxFrameLength(), configuration.getFrameLengthFieldOffset(), lengthFieldLength,
-                configuration.getFrameLengthFieldAdjust(), lengthFieldLength));
+        pipeline.addLast("headerLengthDecoder", new HeaderLengthDecoder(lengthFieldLength));
+
         pipeline.addLast("iso8583Decoder", createIso8583Decoder(isoMessageFactory));
 
         pipeline.addLast("iso8583Encoder", isoMessageEncoder);

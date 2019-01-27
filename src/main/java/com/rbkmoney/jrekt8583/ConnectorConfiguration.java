@@ -17,35 +17,13 @@ public abstract class ConnectorConfiguration {
     private static final int DEFAULT_IDLE_TIMEOUT_SECONDS = 30;
 
     /**
-     * Default {@link #maxFrameLength} (max message length) = 8192
-     *
-     * @see #getMaxFrameLength()
-     */
-    private static final int DEFAULT_MAX_FRAME_LENGTH = 8192;
-
-    /**
-     * Default {@link #frameLengthFieldLength} (length of TCP Frame length) = 2
+     * Default {@link #frameLengthFieldLength}
      *
      * @see #getFrameLengthFieldLength()
      */
-    private static final int DEFAULT_FRAME_LENGTH_FIELD_LENGTH = 2;
-
-    /**
-     * Default {@link #frameLengthFieldAdjust} (compensation value to add to the value of the length field) = 0
-     *
-     * @see #getFrameLengthFieldAdjust()
-     */
-    private static final int DEFAULT_FRAME_LENGTH_FIELD_ADJUST = 0;
-
-    /**
-     * Default {@link #frameLengthFieldOffset} (the offset of the length field) = 0
-     *
-     * @see #getFrameLengthFieldOffset()
-     */
-    private static final int DEFAULT_FRAME_LENGTH_FIELD_OFFSET = 0;
+    private static final int DEFAULT_FRAME_LENGTH_FIELD_LENGTH = 6;
 
     private final boolean addEchoMessageListener;
-    private int maxFrameLength;
     private int idleTimeout;
     private final int workerThreadsCount;
     private boolean replyOnError;
@@ -54,22 +32,17 @@ public abstract class ConnectorConfiguration {
     private int[] sensitiveDataFields;
     private boolean logFieldDescription;
     private final int frameLengthFieldLength;
-    private final int frameLengthFieldOffset;
-    private final int frameLengthFieldAdjust;
 
     protected ConnectorConfiguration(final Builder builder) {
         addLoggingHandler = builder.addLoggingHandler;
         idleTimeout = builder.idleTimeout;
         logFieldDescription = builder.logFieldDescription;
         logSensitiveData = builder.logSensitiveData;
-        maxFrameLength = builder.maxFrameLength;
         replyOnError = builder.replyOnError;
         sensitiveDataFields = builder.sensitiveDataFields;
         addEchoMessageListener = builder.addEchoMessageListener;
         workerThreadsCount = builder.workerThreadsCount;
         frameLengthFieldLength = builder.frameLengthFieldLength;
-        frameLengthFieldAdjust = builder.frameLengthFieldAdjust;
-        frameLengthFieldOffset = builder.frameLengthFieldOffset;
     }
 
     /**
@@ -94,39 +67,6 @@ public abstract class ConnectorConfiguration {
     }
 
     /**
-     * Set Idle Timeout in seconds
-     *
-     * @param idleTimeoutSeconds Idle timeout in seconds
-     * @deprecated Use {@link Builder}
-     */
-    @Deprecated
-    public void setIdleTimeout(int idleTimeoutSeconds) {
-        this.idleTimeout = idleTimeoutSeconds;
-    }
-
-    public int getMaxFrameLength() {
-        return maxFrameLength;
-    }
-
-    /**
-     * @param maxFrameLength the maximum length of the frame.
-     * @deprecated Use {@link Builder}
-     */
-    @Deprecated
-    public void setMaxFrameLength(int maxFrameLength) {
-        this.maxFrameLength = maxFrameLength;
-    }
-
-    /**
-     * @param addLoggingHandler should logging handler be added to pipeline
-     * @deprecated Use {@link Builder}
-     */
-    @Deprecated
-    public void setAddLoggingHandler(boolean addLoggingHandler) {
-        this.addLoggingHandler = addLoggingHandler;
-    }
-
-    /**
      * Returns true is {@link IsoMessageLoggingHandler}
      * <p>Allows to disable adding default logging handler to {@link ChannelPipeline}.</p>
      *
@@ -146,18 +86,9 @@ public abstract class ConnectorConfiguration {
     }
 
     /**
-     * @param replyOnError should reply on error
-     * @deprecated Use {@link Builder}
-     */
-    @Deprecated
-    public void setReplyOnError(boolean replyOnError) {
-        this.replyOnError = replyOnError;
-    }
-
-    /**
      * Returns <code>true</code> if sensitive information like PAN, CVV/CVV2, and Track2 should be printed to log.
      * <p>
-     * Default value is <code>true</code> (sensitive data is printed).
+     * Default value is <code>false</code> (sensitive data is not printed).
      * </p>
      *
      * @return <code>true</code> if sensitive data should be printed to log
@@ -166,26 +97,8 @@ public abstract class ConnectorConfiguration {
         return logSensitiveData;
     }
 
-    /**
-     * @param logSensitiveData should log sensitive data
-     * @deprecated Use {@link Builder}
-     */
-    @Deprecated
-    public void setLogSensitiveData(boolean logSensitiveData) {
-        this.logSensitiveData = logSensitiveData;
-    }
-
     public boolean logFieldDescription() {
         return logFieldDescription;
-    }
-
-    /**
-     * @param logFieldDescription Should field descriptions be printed in log. Useful for when testing system integration.
-     * @deprecated Use {@link Builder}
-     */
-    @Deprecated
-    public void setLogFieldDescription(boolean logFieldDescription) {
-        this.logFieldDescription = logFieldDescription;
     }
 
     /**
@@ -198,15 +111,6 @@ public abstract class ConnectorConfiguration {
      */
     public int[] getSensitiveDataFields() {
         return sensitiveDataFields;
-    }
-
-    /**
-     * @param sensitiveDataFields which fields may contain sensitive data
-     * @deprecated Use {@link Builder}
-     */
-    @Deprecated
-    public void setSensitiveDataFields(int[] sensitiveDataFields) {
-        this.sensitiveDataFields = sensitiveDataFields;
     }
 
     /**
@@ -228,66 +132,20 @@ public abstract class ConnectorConfiguration {
         return frameLengthFieldLength;
     }
 
-    @SuppressWarnings({"unchecked", "unused"})
-    /**
-     * Returns the offset of the length field.
-     *
-     * @implNote Default value is <code>0</code>
-     * @see LengthFieldBasedFrameDecoder
-     */
-    public int getFrameLengthFieldOffset() {
-        return frameLengthFieldOffset;
-    }
-
-    /**
-     * Returns the compensation value to add to the value of the length field.
-     *
-     * @implNote Default value is <code>0</code>
-     * @see LengthFieldBasedFrameDecoder
-     */
-    public int getFrameLengthFieldAdjust() {
-        return frameLengthFieldAdjust;
-    }
-
     protected abstract static class Builder<B extends Builder> {
         private boolean addLoggingHandler = false;
         private boolean addEchoMessageListener = false;
         private boolean logFieldDescription = true;
-        private boolean logSensitiveData = true;
+        private boolean logSensitiveData = false;
         private boolean replyOnError = false;
         private int idleTimeout = DEFAULT_IDLE_TIMEOUT_SECONDS;
-        private int maxFrameLength = DEFAULT_MAX_FRAME_LENGTH;
         private int workerThreadsCount = 0; // use netty default
         private int[] sensitiveDataFields;
         private int frameLengthFieldLength = DEFAULT_FRAME_LENGTH_FIELD_LENGTH;
-        private int frameLengthFieldOffset = DEFAULT_FRAME_LENGTH_FIELD_OFFSET;
-        private int frameLengthFieldAdjust = DEFAULT_FRAME_LENGTH_FIELD_ADJUST;
 
         public B addEchoMessageListener() {
             this.addEchoMessageListener = true;
             return (B) this;
-        }
-
-        /**
-         * @deprecated Use {@link #addEchoMessageListener()} instead
-         */
-        @Deprecated
-        public B withEchoMessageListener(boolean shouldAddEchoMessageListener) {
-            this.addEchoMessageListener = shouldAddEchoMessageListener;
-            return (B) this;
-        }
-
-        public B maxFrameLength(int length) {
-            this.maxFrameLength = length;
-            return (B) this;
-        }
-
-        /**
-         * @deprecated Use {@link #maxFrameLength(int)} instead
-         */
-        @Deprecated
-        public B withMaxFrameLength(int length) {
-            return maxFrameLength(length);
         }
 
         public B idleTimeout(int timeout) {
@@ -295,25 +153,9 @@ public abstract class ConnectorConfiguration {
             return (B) this;
         }
 
-        /**
-         * Use {@link #idleTimeout(int)} instead
-         */
-        @Deprecated
-        public B withIdleTimeout(int timeout) {
-            return idleTimeout(timeout);
-        }
-
         public B replyOnError(boolean doReply) {
             this.replyOnError = doReply;
             return (B) this;
-        }
-
-        /**
-         * @deprecated Use {@link #replyOnError(boolean)} instead
-         */
-        @Deprecated
-        public B withReplyOnError(boolean doReply) {
-            return replyOnError(doReply);
         }
 
         public B addLoggingHandler() {
@@ -327,14 +169,6 @@ public abstract class ConnectorConfiguration {
         }
 
         /**
-         * @deprecated Use {@link #addLoggingHandler()} instead
-         */
-        public B withAddLoggingHandler(boolean addLoggingHandler) {
-            this.addLoggingHandler = addLoggingHandler;
-            return (B) this;
-        }
-
-        /**
          * Should log sensitive data (unmasked) or not.
          * <p>
          * Don't use on production!
@@ -344,25 +178,8 @@ public abstract class ConnectorConfiguration {
             return (B) this;
         }
 
-        /**
-         * @deprecated Use {@link #logSensitiveData(boolean)} instead
-         */
-        public B withLogSensitiveData(boolean logSensitiveData) {
-            this.logSensitiveData = logSensitiveData;
-            return (B) this;
-        }
-
         public B describeFieldsInLog() {
             this.logFieldDescription = true;
-            return (B) this;
-        }
-
-        /**
-         * @deprecated Use {@link #describeFieldsInLog()}
-         */
-        @Deprecated
-        public B withLogFieldDescription(boolean logFieldDescription) {
-            this.logFieldDescription = logFieldDescription;
             return (B) this;
         }
 
@@ -374,23 +191,6 @@ public abstract class ConnectorConfiguration {
         public B frameLengthFieldLength(int frameLengthFieldLength) {
             this.frameLengthFieldLength = frameLengthFieldLength;
             return (B) this;
-        }
-
-        public B frameLengthFieldOffset(final int frameLengthFieldOffset) {
-            this.frameLengthFieldOffset = frameLengthFieldOffset;
-            return (B) this;
-        }
-
-        public B frameLengthFieldAdjust(final int frameLengthFieldAdjust) {
-            this.frameLengthFieldAdjust = frameLengthFieldAdjust;
-            return (B) this;
-        }
-        /**
-         * @deprecated Use {@link #sensitiveDataFields(int...)} instead
-         */
-        @Deprecated
-        public B withSensitiveDataFields(int... sensitiveDataFields) {
-            return sensitiveDataFields(sensitiveDataFields);
         }
 
         public B workerThreadsCount(int numberOfThreads) {

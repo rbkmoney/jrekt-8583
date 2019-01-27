@@ -28,16 +28,6 @@ public class Iso8583Client<T extends IsoMessage> extends AbstractIso8583Connecto
     }
 
     /**
-     * @deprecated Use {@link #Iso8583Client(SocketAddress, ClientConfiguration, MessageFactory)}
-     *
-     * @param isoMessageFactory message factory
-     */
-    @Deprecated
-    public Iso8583Client(MessageFactory<T> isoMessageFactory) {
-        super(ClientConfiguration.getDefault(), isoMessageFactory);
-    }
-
-    /**
      * Connects synchronously to remote address.
      *
      * @return Returns the {@link ChannelFuture} which will be notified when this

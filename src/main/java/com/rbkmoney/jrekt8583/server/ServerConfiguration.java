@@ -4,14 +4,6 @@ import com.rbkmoney.jrekt8583.ConnectorConfiguration;
 
 public class ServerConfiguration extends ConnectorConfiguration {
 
-    /**
-     * @deprecated Use {@link Builder}
-     */
-    @Deprecated
-    public ServerConfiguration() {
-        this(newBuilder());
-    }
-
     public ServerConfiguration(Builder builder) {
         super(builder);
     }

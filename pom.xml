@@ -10,7 +10,7 @@
 
     <groupId>com.rbkmoney.jrekt8583</groupId>
     <artifactId>netty-iso8583</artifactId>
-    <version>0.2.3-SNAPSHOT</version>
+    <version>0.2.3</version>
 
     <name>ISO8583 Connector for Netty</name>
     <description>
@@ -24,7 +24,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <!-- Versions -->
-        <j8583.version>1.12.0</j8583.version>
+        <j8583.version>1.13.2</j8583.version>
         <mockito.version>2.23.4</mockito.version>
         <netty.version>[4.1.31.Final,4.2)</netty.version>
         <slf4j.version>[1.7.25,1.7.999)</slf4j.version>
@@ -33,7 +33,7 @@
 
     <dependencies>
         <dependency>
-            <groupId>net.sf.j8583</groupId>
+            <groupId>org.bitbucket.thibaudledent.j8583</groupId>
             <artifactId>j8583</artifactId>
             <version>${j8583.version}</version>
         </dependency>

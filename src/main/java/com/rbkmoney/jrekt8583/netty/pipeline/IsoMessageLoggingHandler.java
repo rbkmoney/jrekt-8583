@@ -20,13 +20,13 @@ import java.util.Properties;
 @ChannelHandler.Sharable
 public class IsoMessageLoggingHandler extends LoggingHandler {
 
-    private static final char MASK_CHAR = '*';
-    private static final int[] DEFAULT_MASKED_FIELDS = {
+    public static final int[] DEFAULT_MASKED_FIELDS = {
             34,// PAN extended
             35,// track 2
             36,// track 3
             45// track 1
     };
+    private static final char MASK_CHAR = '*';
     private static final char[] MASKED_VALUE = "***".toCharArray();
     private static final String[] FIELD_NAMES = new String[128];
 
