@@ -4,6 +4,7 @@ import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufUtil;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.ByteToMessageDecoder;
+import io.netty.handler.codec.CorruptedFrameException;
 
 import java.util.List;
 
@@ -24,16 +25,22 @@ public class HeaderLengthDecoder extends ByteToMessageDecoder {
     }
 
     protected Object decode(ChannelHandlerContext ctx, ByteBuf in) throws Exception {
-        int frameLength = getUnadjustedFrameLength(in, lengthHeaderLength);
+
+        int actualLengthHeaderOffset = in.readerIndex();
+        int frameLength = getUnadjustedFrameLength(in, actualLengthHeaderOffset, lengthHeaderLength);
+
+        if (frameLength < 0) {
+            throw new CorruptedFrameException("negative frame length field: " + frameLength);
+        }
 
         if (in.readableBytes() < frameLength) {
             return null;
         }
 
         // extract frame
-        int index = in.readerIndex();
-        ByteBuf frame = extractFrame(in, lengthHeaderLength, frameLength);
-        in.readerIndex(index + (lengthHeaderLength + frameLength));
+        int readerIndexWithHeaderLength = in.readerIndex() + lengthHeaderLength;
+        ByteBuf frame = extractFrame(in, readerIndexWithHeaderLength, frameLength);
+        in.readerIndex(readerIndexWithHeaderLength + frameLength);
         return frame;
     }
 
@@ -41,8 +48,8 @@ public class HeaderLengthDecoder extends ByteToMessageDecoder {
         return buffer.retainedSlice(index, length);
     }
 
-    protected int getUnadjustedFrameLength(ByteBuf buf, int length) {
-        byte[] lengthField = ByteBufUtil.getBytes(buf, 0, length);
+    protected int getUnadjustedFrameLength(ByteBuf buf, int offset, int length) {
+        byte[] lengthField = ByteBufUtil.getBytes(buf, offset, length);
         return Integer.valueOf(new String(lengthField));
     }
 }
