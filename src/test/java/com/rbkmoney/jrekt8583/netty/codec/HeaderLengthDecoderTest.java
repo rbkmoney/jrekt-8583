@@ -15,9 +15,9 @@ import static org.mockito.Mockito.verifyZeroInteractions;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-public class Iso8583DecoderTest {
+public class HeaderLengthDecoderTest {
 
-    private Iso8583Decoder decoder;
+    private HeaderLengthDecoder decoder;
 
     @Mock
     private MessageFactory messageFactory;
@@ -30,15 +30,13 @@ public class Iso8583DecoderTest {
 
     @BeforeEach
     public void beforeClass() {
-        decoder = new Iso8583Decoder(messageFactory);
+        decoder = new HeaderLengthDecoder(6);
     }
 
     @Test
-    public void testDecodeEmptyByteBufDoesNothing() throws Exception {
+    public void testDecodeEmptyByteBuf() throws Exception {
         when(byteBuf.isReadable()).thenReturn(false);
-
         decoder.decode(ctx, byteBuf, out);
-
         verifyZeroInteractions(ctx, out, messageFactory);
     }
 }

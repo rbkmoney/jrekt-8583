@@ -25,6 +25,9 @@ public class HeaderLengthDecoder extends ByteToMessageDecoder {
     }
 
     protected Object decode(ChannelHandlerContext ctx, ByteBuf in) throws Exception {
+        if (!in.isReadable()) {
+            return null;
+        }
 
         int actualLengthHeaderOffset = in.readerIndex();
         int frameLength = getUnadjustedFrameLength(in, actualLengthHeaderOffset, lengthHeaderLength);
@@ -50,6 +53,10 @@ public class HeaderLengthDecoder extends ByteToMessageDecoder {
 
     protected int getUnadjustedFrameLength(ByteBuf buf, int offset, int length) {
         byte[] lengthField = ByteBufUtil.getBytes(buf, offset, length);
-        return Integer.valueOf(new String(lengthField));
+        try {
+            return Integer.valueOf(new String(lengthField));
+        } catch (NumberFormatException ex) {
+            throw new CorruptedFrameException("Corrupted length field", ex);
+        }
     }
 }
