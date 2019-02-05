@@ -1,5 +1,6 @@
 package com.rbkmoney.jrekt8583.netty.pipeline;
 
+import com.rbkmoney.jrekt8583.IsoField;
 import com.solab.iso8583.IsoMessage;
 import com.solab.iso8583.IsoValue;
 import io.netty.channel.ChannelHandler;
@@ -10,6 +11,7 @@ import io.netty.handler.logging.LoggingHandler;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.Properties;
 
 import static com.rbkmoney.jrekt8583.IsoField.*;
@@ -22,37 +24,23 @@ import static com.rbkmoney.jrekt8583.IsoField.*;
 @ChannelHandler.Sharable
 public class IsoMessageLoggingHandler extends LoggingHandler {
 
-    public static final int[] DEFAULT_MASKED_FIELDS = {
-            PAN_EXTENDED.getId(),
-            TRACK_2_DATA.getId(),
-            TRACK_3_DATA.getId(),
-            TRACK_1_DATA.getId()
+    public static final IsoField[] DEFAULT_MASKED_FIELDS = {
+            PAN_EXTENDED,
+            TRACK_2_DATA,
+            TRACK_3_DATA,
+            TRACK_1_DATA
     };
     private static final char MASK_CHAR = '*';
     private static final char[] MASKED_VALUE = "***".toCharArray();
-    private static final String[] FIELD_NAMES = new String[128];
-
-    static {
-        try (InputStream stream = Thread.currentThread().getContextClassLoader().getResourceAsStream("com/rbkmoney/jrekt8583/iso8583fields.properties")) {
-            final Properties properties = new Properties();
-            properties.load(stream);
-            properties.forEach((key, value) -> {
-                int field = Integer.parseInt((String) key);
-                FIELD_NAMES[field - 1] = (String) value;
-            });
-        } catch (IOException | NumberFormatException e) {
-            throw new IllegalStateException("Unable to load ISO8583 field descriptions", e);
-        }
-    }
 
     private final boolean printSensitiveData;
     private final boolean printFieldDescriptions;
-    private final int[] maskedFields;
+    private final IsoField[] maskedFields;
 
     public IsoMessageLoggingHandler(LogLevel level,
                                     boolean printSensitiveData,
                                     boolean printFieldDescriptions,
-                                    int... maskedFields) {
+                                    IsoField... maskedFields) {
         super(level);
         this.printSensitiveData = printSensitiveData;
         this.printFieldDescriptions = printFieldDescriptions;
@@ -86,23 +74,23 @@ public class IsoMessageLoggingHandler extends LoggingHandler {
             sb.append("Message: ").append(m.debugString()).append("\n");
         }
         sb.append("MTI: 0x").append(String.format("%04x", m.getType()));
-        for (int i = 2; i < 128; i++) {
-            if (m.hasField(i)) {
-                final IsoValue<Object> field = m.getField(i);
-                sb.append("\n  ").append(i)
+        for (IsoField isoField : IsoField.values()) {
+            if (m.hasField(isoField.getId())) {
+                final IsoValue<Object> field = m.getField(isoField.getId());
+                sb.append("\n  ").append(isoField.getId())
                         .append(": [");
 
                 if (printFieldDescriptions) {
-                    sb.append(FIELD_NAMES[i - 1]).append(':');
+                    sb.append(isoField).append(':');
                 }
 
                 char[] formattedValue;
                 if (printSensitiveData) {
                     formattedValue = field.toString().toCharArray();
                 } else {
-                    if (i == PAN.getId()) {
+                    if (isoField == PAN) {
                         formattedValue = maskPAN(field.toString());
-                    } else if (Arrays.binarySearch(maskedFields, i) >= 0) {
+                    } else if (Arrays.binarySearch(maskedFields, isoField) >= 0) {
                         formattedValue = MASKED_VALUE;
                     } else {
                         formattedValue = field.toString().toCharArray();

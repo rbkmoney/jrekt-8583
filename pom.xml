@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
@@ -10,7 +11,7 @@
 
     <groupId>com.rbkmoney.jrekt8583</groupId>
     <artifactId>netty-iso8583</artifactId>
-    <version>0.2.4</version>
+    <version>0.2.5</version>
 
     <name>ISO8583 Connector for Netty</name>
     <description>
@@ -24,7 +25,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <!-- Versions -->
-        <j8583.version>1.13.2</j8583.version>
+        <j8583.version>1.13.3</j8583.version>
         <mockito.version>2.23.4</mockito.version>
         <netty.version>[4.1.31.Final,4.2)</netty.version>
         <slf4j.version>[1.7.25,1.7.999)</slf4j.version>

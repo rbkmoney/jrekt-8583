@@ -12,7 +12,7 @@ public class TimeBasedSequenceTraceGenerator implements TraceNumberGenerator {
     private final AtomicInteger sequence;
 
     public TimeBasedSequenceTraceGenerator() {
-        this(Math.toIntExact(System.currentTimeMillis() % MAX_SEQUENCE_VALUE));
+        this(Math.max(Math.toIntExact(System.currentTimeMillis() % MAX_SEQUENCE_VALUE), 1));
     }
 
     public TimeBasedSequenceTraceGenerator(int initialValue) {

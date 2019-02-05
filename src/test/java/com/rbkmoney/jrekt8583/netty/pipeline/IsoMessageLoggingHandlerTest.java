@@ -1,5 +1,6 @@
 package com.rbkmoney.jrekt8583.netty.pipeline;
 
+import com.rbkmoney.jrekt8583.IsoField;
 import com.solab.iso8583.IsoMessage;
 import com.solab.iso8583.IsoType;
 import com.solab.iso8583.MessageFactory;
@@ -13,6 +14,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import static com.rbkmoney.jrekt8583.IsoField.*;
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphanumeric;
 import static org.apache.commons.lang3.RandomStringUtils.randomNumeric;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -57,7 +59,16 @@ public class IsoMessageLoggingHandlerTest {
 
     @Test
     public void testMaskSensitiveData() {
-        handler = new IsoMessageLoggingHandler(LogLevel.DEBUG, false, true, 34, 35, 36, 45, 112);
+        handler = new IsoMessageLoggingHandler(
+                LogLevel.DEBUG,
+                false,
+                true,
+                PAN_EXTENDED,
+                TRACK_2_DATA,
+                TRACK_3_DATA,
+                TRACK_1_DATA,
+                RESERVED_FOR_ISO_USE_3
+        );
 
         final String result = handler.format(ctx, "someEvent", message);
 
@@ -101,7 +112,7 @@ public class IsoMessageLoggingHandlerTest {
 
         final String result = handler.format(ctx, "someEvent", message);
 
-        assertThat(result).doesNotContain("Primary account number (PAN)");
+        assertThat(result).doesNotContain("PAN");
     }
 
     @Test
@@ -110,6 +121,6 @@ public class IsoMessageLoggingHandlerTest {
 
         final String result = handler.format(ctx, "someEvent", message);
 
-        assertThat(result).contains("Primary account number (PAN)");
+        assertThat(result).contains("PAN");
     }
 }

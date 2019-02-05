@@ -38,6 +38,7 @@ public class Iso8583ClientConfig {
         final ClientConfiguration configuration = ClientConfiguration.newBuilder()
 //                .addLoggingHandler()
                 .idleTimeout(idleTimeout)
+                .addLoggingHandler()
                 .logSensitiveData(false)
 //                .workerThreadsCount(4)
                 .build();

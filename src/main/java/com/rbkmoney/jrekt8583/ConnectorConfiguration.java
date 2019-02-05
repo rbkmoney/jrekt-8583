@@ -29,7 +29,7 @@ public abstract class ConnectorConfiguration {
     private boolean replyOnError;
     private boolean addLoggingHandler;
     private boolean logSensitiveData;
-    private int[] sensitiveDataFields;
+    private IsoField[] sensitiveDataFields;
     private boolean logFieldDescription;
     private final int frameLengthFieldLength;
 
@@ -109,7 +109,7 @@ public abstract class ConnectorConfiguration {
      * @see IsoMessageLoggingHandler
      * @see IsoMessageLoggingHandler#DEFAULT_MASKED_FIELDS
      */
-    public int[] getSensitiveDataFields() {
+    public IsoField[] getSensitiveDataFields() {
         return sensitiveDataFields;
     }
 
@@ -140,7 +140,7 @@ public abstract class ConnectorConfiguration {
         private boolean replyOnError = false;
         private int idleTimeout = DEFAULT_IDLE_TIMEOUT_SECONDS;
         private int workerThreadsCount = 0; // use netty default
-        private int[] sensitiveDataFields;
+        private IsoField[] sensitiveDataFields;
         private int frameLengthFieldLength = DEFAULT_FRAME_LENGTH_FIELD_LENGTH;
 
         public B addEchoMessageListener() {
@@ -183,7 +183,7 @@ public abstract class ConnectorConfiguration {
             return (B) this;
         }
 
-        public B sensitiveDataFields(int... sensitiveDataFields) {
+        public B sensitiveDataFields(IsoField... sensitiveDataFields) {
             this.sensitiveDataFields = sensitiveDataFields;
             return (B) this;
         }
