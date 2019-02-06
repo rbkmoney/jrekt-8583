@@ -4,8 +4,6 @@ import com.rbkmoney.jrekt8583.IsoField;
 import com.solab.iso8583.IsoMessage;
 import com.solab.iso8583.IsoValue;
 
-import java.util.function.Consumer;
-
 public class IsoUtil {
 
     public static String getStringFieldValue(IsoMessage isoMessage, IsoField isoField) {
@@ -14,13 +12,6 @@ public class IsoUtil {
                         isoMessage.getObjectValue(isoField.getId()).toString(),
                         isoField.getLength()
                 );
-    }
-
-    public static void setIfExist(IsoMessage isoMessage, IsoField isoField, Consumer<String> consumer) {
-        int numericCode = isoField.getId();
-        if (isoMessage.hasField(numericCode)) {
-            consumer.accept(getStringFieldValue(isoMessage, isoField));
-        }
     }
 
     public static <T> IsoValue<T> buildIsoValue(IsoField isoField, T value) {
