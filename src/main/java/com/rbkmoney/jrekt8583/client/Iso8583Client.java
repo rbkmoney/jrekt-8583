@@ -1,6 +1,7 @@
 package com.rbkmoney.jrekt8583.client;
 
 import com.rbkmoney.jrekt8583.AbstractIso8583Connector;
+import com.rbkmoney.jrekt8583.netty.pipeline.AfterConnectListener;
 import com.rbkmoney.jrekt8583.netty.pipeline.Iso8583ChannelInitializer;
 import com.rbkmoney.jrekt8583.netty.pipeline.ReconnectOnCloseListener;
 import com.rbkmoney.jrekt8583.util.IsoUtil;
@@ -25,6 +26,7 @@ public class Iso8583Client<T extends IsoMessage> extends AbstractIso8583Connecto
 
     public static final long DEFAULT_TIMEOUT = 60L;
     private ReconnectOnCloseListener reconnectOnCloseListener;
+    private AfterConnectListener afterConnectListener = () -> {};
 
     public Iso8583Client(SocketAddress socketAddress, ClientConfiguration config, MessageFactory<T> isoMessageFactory) {
         super(config, isoMessageFactory);
@@ -85,16 +87,18 @@ public class Iso8583Client<T extends IsoMessage> extends AbstractIso8583Connecto
         final Bootstrap b = getBootstrap();
         reconnectOnCloseListener.requestReconnect();
         final ChannelFuture connectFuture = b.connect();
-        connectFuture.addListener(connFuture -> {
-            if (!connectFuture.isSuccess()) {
-                reconnectOnCloseListener.scheduleReconnect();
-                return;
-            }
-            Channel channel = connectFuture.channel();
-            logger.debug("Client is connected to {}", channel.remoteAddress());
-            setChannel(channel);
-            channel.closeFuture().addListener(reconnectOnCloseListener);
-        });
+        connectFuture.addListeners(connFuture -> {
+                    if (!connectFuture.isSuccess()) {
+                        reconnectOnCloseListener.scheduleReconnect();
+                        return;
+                    }
+                    Channel channel = connectFuture.channel();
+                    logger.debug("Client is connected to {}", channel.remoteAddress());
+                    setChannel(channel);
+                    channel.closeFuture().addListener(reconnectOnCloseListener);
+                },
+                afterConnectListener
+        );
 
         return connectFuture;
     }
@@ -179,5 +183,12 @@ public class Iso8583Client<T extends IsoMessage> extends AbstractIso8583Connecto
     public boolean isConnected() {
         Channel channel = getChannel();
         return channel != null && channel.isActive();
+    }
+
+    public void addAfterConnectListener(AfterConnectListener afterConnectListener) {
+        if (afterConnectListener == null) {
+            throw new IllegalArgumentException("listener must not be null");
+        }
+        this.afterConnectListener = afterConnectListener;
     }
 }
