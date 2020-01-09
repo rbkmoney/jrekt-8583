@@ -11,7 +11,7 @@
 
     <groupId>com.rbkmoney.jrekt8583</groupId>
     <artifactId>netty-iso8583</artifactId>
-    <version>0.2.7</version>
+    <version>0.2.8</version>
 
     <name>ISO8583 Connector for Netty</name>
     <description>
@@ -47,6 +47,11 @@
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
             <version>${slf4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.4</version>
         </dependency>
 
         <!--  Test Dependencies -->

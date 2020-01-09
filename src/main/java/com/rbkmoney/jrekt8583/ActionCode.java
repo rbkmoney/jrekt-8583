@@ -1,0 +1,128 @@
+package com.rbkmoney.jrekt8583;
+
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.ToString;
+
+import java.util.Arrays;
+
+@Getter
+@ToString
+@RequiredArgsConstructor
+public enum ActionCode {
+    APPROVED("000", "Approved"),
+    APPROVED_HONOUR_WITH_IDENTIFICATION("001", "Approved, honour with identification"),
+    APPROVED_FOR_PARTIAL_AMOUNT("002", "Approved for partial amount"),
+    APPROVED_FOR_VIP("003", "Approved for VIP"),
+    APPROVED_UPDATE_TRACK_3("004", "Approved, update track 3"),
+    APPROVED_ACCOUNT_TYPE_SPECIFIED_BY_CARD_ISSUER("005", "Approved, account type specified by card issuer"),
+    APPROVED_FOR_PARTIAL_AMOUNT_ACCOUNT_TYPE_SPECIFIED_BY_CARD_ISSUER("006", "Approved for partial amount, account type specified by card issuer"),
+    APPROVED_UPDATE_ICC("007", "Approved, update ICC"),
+    DECLINE_GENERAL_NO_COMMENTS("100", "Decline (general, no comments)"),
+    DECLINE_EXPIRED_CARD("101", "Decline, expired card"),
+    DECLINE_SUSPECTED_FRAUD("102", "Decline, suspected fraud"),
+    DECLINE_CARD_ACCEPTOR_CONTACT_ACQUIRER("103", "Decline, card acceptor contact acquirer"),
+    DECLINE_RESTRICTED_CARD("104", "Decline, restricted card"),
+    DECLINE_CARD_ACCEPTOR_CALL_ACQUIRERS_SECURITY_DEPARTMENT("105", "Decline, card acceptor call acquirer's security department"),
+    DECLINE_ALLOWABLE_PIN_TRIES_EXCEEDED("106", "Decline, allowable PIN tries exceeded"),
+    DECLINE_REFER_TO_CARD_ISSUER("107", "Decline, refer to card issuer"),
+    DECLINE_REFER_TO_CARD_ISSUERS_SPECIAL_CONDITIONS("108", "Decline, refer to card issuer's special conditions"),
+    DECLINE_INVALID_MERCHANT("109", "Decline, invalid merchant"),
+    DECLINE_INVALID_AMOUNT("110", "Decline, invalid amount"),
+    DECLINE_INVALID_CARD_NUMBER("111", "Decline, invalid card number"),
+    DECLINE_PIN_DATA_REQUIRED("112", "Decline, PIN data required"),
+    DECLINE_UNACCEPTABLE_FEE("113", "Decline, unacceptable fee"),
+    DECLINE_NO_ACCOUNT_OF_TYPE_REQUESTED("114", "Decline, no account of type requested"),
+    DECLINE_REQUESTED_FUNCTION_NOT_SUPPORTED("115", "Decline, requested function not supported"),
+    DECLINE_NOT_SUFFICIENT_FUNDS("116", "Decline, not sufficient funds"),
+    DECLINE_INCORRECT_PIN("117", "Decline, incorrect PIN"),
+    DECLINE_NO_CARD_RECORD("118", "Decline, no card record"),
+    DECLINE_TRANSACTION_NOT_PERMITTED_TO_CARDHOLDER("119", "Decline, transaction not permitted to cardholder"),
+    DECLINE_TRANSACTION_NOT_PERMITTED_TO_TERMINAL("120", "Decline, transaction not permitted to terminal"),
+    DECLINE_EXCEEDS_WITHDRAWAL_AMOUNT_LIMIT("121", "Decline, exceeds withdrawal amount limit"),
+    DECLINE_SECURITY_VIOLATION("122", "Decline, security violation"),
+    DECLINE_EXCEEDS_WITHDRAWAL_FREQUENCY_LIMIT("123", "Decline, exceeds withdrawal frequency limit"),
+    DECLINE_VIOLATION_OF_LAW("124", "Decline, violation of law"),
+    DECLINE_CARD_NOT_EFFECTIVE("125", "Decline, card not effective"),
+    DECLINE_INVALID_PIN_BLOCK("126", "Decline, invalid PIN block"),
+    DECLINE_PIN_LENGTH_ERROR("127", "Decline, PIN length error"),
+    DECLINE_PIN_KAY_SYNCH_ERROR("128", "Decline, PIN kay synch error"),
+    DECLINE_SUSPECTED_COUNTERFEIT_CARD("129", "Decline, suspected counterfeit card"),
+    DECLINE_BY_CARDHOLDERS_WISH("180", "Decline, by cardholders wish"),
+    PICK_UP_GENERAL_NO_COMMENTS("200", "Pick-up (general, no comments)"),
+    PICK_UP_EXPIRED_CARD("201", "Pick-up, expired card"),
+    PICK_UP_SUSPECTED_FRAUD("202", "Pick-up, suspected fraud"),
+    PICK_UP_CARD_ACCEPTOR_CONTACT_CARD_ACQUIRER("203", "Pick-up, card acceptor contact card acquirer"),
+    PICK_UP_RESTRICTED_CARD("204", "Pick-up, restricted card"),
+    PICK_UP_CARD_ACCEPTOR_CALL_ACQUIRERS_SECURITY_DEPARTMENT("205", "Pick-up, card acceptor call acquirer's security department"),
+    PICK_UP_ALLOWABLE_PIN_TRIES_EXCEEDED("206", "Pick-up, allowable PIN tries exceeded"),
+    PICK_UP_SPECIAL_CONDITIONS("207", "Pick-up, special conditions"),
+    PICK_UP_LOST_CARD("208", "Pick-up, lost card"),
+    PICK_UP_STOLEN_CARD("209", "Pick-up, stolen card"),
+    PICK_UP_SUSPECTED_COUNTERFEIT_CARD("210", "Pick-up, suspected counterfeit card"),
+    STATUS_MESSAGE_FILE_ACTION_SUCCESSFUL("300", "Status message: file action successful"),
+    STATUS_MESSAGE_FILE_ACTION_NOT_SUPPORTED_BY_RECEIVER("301", "Status message: file action not supported by receiver"),
+    STATUS_MESSAGE_UNABLE_TO_LOCATE_RECORD_ON_FILE("302", "Status message: unable to locate record on file"),
+    STATUS_MESSAGE_DUPLICATE_RECORD_OLD_RECORD_REPLACED("303", "Status message: duplicate record, old record replaced"),
+    STATUS_MESSAGE_FILE_RECORD_FIELD_EDIT_ERROR("304", "Status message: file record field edit error"),
+    STATUS_MESSAGE_FILE_LOCKED_OUT("305", "Status message: file locked out"),
+    STATUS_MESSAGE_FILE_ACTION_NOT_SUCCESSFUL("306", "Status message: file action not successful"),
+    STATUS_MESSAGE_FILE_DATA_FORMAT_ERROR("307", "Status message: file data format error"),
+    STATUS_MESSAGE_DUPLICATE_RECORD_NEW_RECORD_REJECTED("308", "Status message: duplicate record, new record rejected"),
+    STATUS_MESSAGE_UNKNOWN_FILE("309", "Status message: unknown file"),
+    ACCEPTED_FOR_REVERSAL("400", "Accepted (for reversal)"),
+    APPROVED_NO_ORIGINAL_MESSAGE_DATA("499", "Approved, no original message data"),
+    STATUS_MESSAGE_RECONCILED_IN_BALANCE("500", "Status message: reconciled, in balance"),
+    STATUS_MESSAGE_RECONCILED_OUT_OF_BALANCE("501", "Status message: reconciled, out of balance"),
+    STATUS_MESSAGE_AMOUNT_NOT_RECONCILED_TOTALS_PROVIDED("502", "Status message: amount not reconciled, totals provided"),
+    STATUS_MESSAGE_TOTALS_FOR_RECONCILIATION_NOT_AVAILABLE("503", "Status message: totals for reconciliation not available"),
+    STATUS_MESSAGE_NOT_RECONCILED_TOTALS_PROVIDED("504", "Status message: not reconciled, totals provided"),
+    ACCEPTED_FOR_ADMINISTRATIVE_INFO("600", "Accepted (for administrative info)"),
+    STATUS_MESSAGE_IMPOSSIBLE_TO_TRACE_BACK_ORIGINAL_TRANSACTION("601", "Status message: impossible to trace back original transaction"),
+    STATUS_MESSAGE_INVALID_TRANSACTION_REFERENCE_NUMBER("602", "Status message: invalid transaction reference number"),
+    STATUS_MESSAGE_REFERENCE_NUMBER_PAN_INCOMPATIBLE("603", "Status message: reference number/PAN incompatible"),
+    STATUS_MESSAGE_POS_PHOTOGRAPH_IS_NOT_AVAILABLE("604", "Status message: POS photograph is not available"),
+    STATUS_MESSAGE_REQUESTED_ITEM_SUPPLIED("605", "Status message: requested item supplied"),
+    STATUS_MESSAGE_REQUEST_CANNOT_BE_FULFILLED_REQUIRED_DOCUMENTATION_IS_NOT_AVAILABLE("606", "Status message: request cannot be fulfilled - required documentation is not available"),
+    LIST_READY("680", "List ready"),
+    LIST_NOT_READY("681", "List not ready"),
+    ACCEPTED_FOR_FEE_COLLECTION("700", "Accepted (for fee collection)"),
+    ACCEPTED_FOR_NETWORK_MANAGEMENT("800", "Accepted (for network management)"),
+    ADVICE_ACKNOWLEDGED_NO_FINANCIAL_LIABILITY_ACCEPTED("900", "Advice acknowledged, no financial liability accepted"),
+    ADVICE_ACKNOWLEDGED_FINANSIAL_LIABILITY_ACCEPTED("901", "Advice acknowledged, finansial liability accepted"),
+    DECLINE_REASON_MESSAGE_INVALID_TRANSACTION("902", "Decline reason message: invalid transaction"),
+    STATUS_MESSAGE_RE_ENTER_TRANSACTION("903", "Status message: re-enter transaction"),
+    DECLINE_REASON_MESSAGE_FORMAT_ERROR("904", "Decline reason message: format error"),
+    DECLINE_REASON_MESSAGE_ACQIURER_NOT_SUPPORTED_BY_SWITCH("905", "Decline reason message: acqiurer not supported by switch"),
+    DECLINE_REASON_MESSAGE_CUTOVER_IN_PROCESS("906", "Decline reason message: cutover in process"),
+    DECLINE_REASON_MESSAGE_CARD_ISSUER_OR_SWITCH_INOPERATIVE("907", "Decline reason message: card issuer or switch inoperative"),
+    DECLINE_REASON_MESSAGE_TRANSACTION_DESTINATION_CANNOT_BE_FOUND_FOR_ROUTING("908", "Decline reason message: transaction destination cannot be found for routing"),
+    DECLINE_REASON_MESSAGE_SYSTEM_MALFUNCTION("909", "Decline reason message: system malfunction"),
+    DECLINE_REASON_MESSAGE_CARD_ISSUER_SIGNED_OFF("910", "Decline reason message: card issuer signed off"),
+    DECLINE_REASON_MESSAGE_CARD_ISSUER_TIMED_OUT("911", "Decline reason message: card issuer timed out"),
+    DECLINE_REASON_MESSAGE_CARD_ISSUER_UNAVAILABLE("912", "Decline reason message: card issuer unavailable"),
+    DECLINE_REASON_MESSAGE_DUPLICATE_TRANSMISSION("913", "Decline reason message: duplicate transmission"),
+    DECLINE_REASON_MESSAGE_NOT_ABLE_TO_TRACE_BACK_TO_ORIGINAL_TRANSACTION("914", "Decline reason message: not able to trace back to original transaction"),
+    DECLINE_REASON_MESSAGE_RECONCILIATION_CUTOVER_OR_CHECKPOINT_ERROR("915", "Decline reason message: reconciliation cutover or checkpoint error"),
+    DECLINE_REASON_MESSAGE_MAC_INCORRECT("916", "Decline reason message: MAC incorrect"),
+    DECLINE_REASON_MESSAGE_MAC_KEY_SYNC_ERROR("917", "Decline reason message: MAC key sync error"),
+    DECLINE_REASON_MESSAGE_NO_COMMUNICATION_KEYS_AVAILABLE_FOR_USE("918", "Decline reason message: no communication keys available for use"),
+    DECLINE_REASON_MESSAGE_ENCRYPTION_KEY_SYNC_ERROR("919", "Decline reason message: encryption key sync error"),
+    DECLINE_REASON_MESSAGE_SECURITY_SOFTWARE_HARDWARE_ERROR_TRY_AGAIN("920", "Decline reason message: security software/hardware error - try again"),
+    DECLINE_REASON_MESSAGE_SECURITY_SOFTWARE_HARDWARE_ERROR_NO_ACTION("921", "Decline reason message: security software/hardware error - no action"),
+    DECLINE_REASON_MESSAGE_MESSAGE_NUMBER_OUT_OF_SEQUENCE("922", "Decline reason message: message number out of sequence"),
+    STATUS_MESSAGE_REQUEST_IN_PROGRESS("923", "Status message: request in progress"),
+    DECLINE_REASON_MESSAGE_VIOLATION_OF_BUSINESS_ARRANGEMENT("950", "Decline reason message: violation of business arrangement"),
+    APPROVED_IN_OFFLINE("0Y1", "Approved in Offline. Used only in advices (1120, 1220)"),
+    TRIED_TO_GO_ONLINE_NOT_SUCCEED_APPROVED_IN_OFFLINE("0Y3", "Tried to go Online, not succeed, Approved in Offline. Used only in advices (1120, 1220)");
+
+    private final String code;
+    private final String description;
+
+    public static ActionCode getByCode(String code) {
+        return Arrays.stream(values())
+                .filter(value -> value.getCode().equals(code))
+                .findFirst()
+                .orElseThrow(()-> new IllegalArgumentException("Wrong action code " + code));
+    }
+}
