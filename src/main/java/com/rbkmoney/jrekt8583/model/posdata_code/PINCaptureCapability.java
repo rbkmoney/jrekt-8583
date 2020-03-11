@@ -18,5 +18,5 @@ public enum PINCaptureCapability {
     ELEVEN_DIGITS("B"),
     TWELVE_DIGITS("C");
 
-    private final String value;
+    private final String code;
 }

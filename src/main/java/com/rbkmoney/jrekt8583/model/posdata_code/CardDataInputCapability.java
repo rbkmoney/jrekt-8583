@@ -17,5 +17,5 @@ public enum CardDataInputCapability {
     CONTACTLESS_SMART_CARD_READ("M"),
     CONTACTLESS_ONLY_TERMINAL("W");
 
-    private final String value;
+    private final String code;
 }

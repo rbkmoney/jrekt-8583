@@ -28,12 +28,12 @@ public enum CardDataInputMode {
     ELECTRONIC_COMMERCE_CHANNEL_ENCRYPTION("V"),
     CREDENTIAL_ON_FILE_CONSUMER_INITIATED_AUTHORIZATION("W");
 
-    private final String value;
+    private final String code;
 
-    public static CardDataInputMode fromValue(String val){
+    public static CardDataInputMode fromCode(String code){
         return Arrays.stream(CardDataInputMode.values())
-                .filter(c -> c.getValue().equals(val))
+                .filter(c -> c.getCode().equals(code))
                 .findFirst()
-                .orElseThrow(()-> new IllegalArgumentException("Unknown value " + val));
+                .orElseThrow(()-> new IllegalArgumentException("Unknown code " + code));
     }
 }

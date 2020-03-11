@@ -12,5 +12,5 @@ public enum  AccountType {
     CREDIT_CARD_ACCOUNT("30"),
     UNIVERSAL_ACCOUNT("40");
 
-    private final String value;
+    private final String code;
 }

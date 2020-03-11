@@ -12,5 +12,5 @@ public enum TerminalOutputCapability {
     DISPLAY("3"),
     PRINTING_AND_DISPLAY("4");
 
-    private final String value;
+    private final String code;
 }

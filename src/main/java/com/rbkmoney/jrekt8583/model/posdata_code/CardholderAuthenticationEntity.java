@@ -13,5 +13,5 @@ public enum CardholderAuthenticationEntity {
     OTHER("5"),
     UNKNOWN("9");
 
-    private final String value;
+    private final String code;
 }

@@ -30,5 +30,5 @@ public enum TransactionCode {
     CHEQUE_BOOK_REQUEST("73"),
     PIN_TRIES_COUNTER_RESET("74");
 
-    private final String value;
+    private final String code;
 }

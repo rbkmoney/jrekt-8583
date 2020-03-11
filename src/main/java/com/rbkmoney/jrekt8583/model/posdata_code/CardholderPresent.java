@@ -16,12 +16,12 @@ public enum CardholderPresent {
     CARDHOLDER_NOT_PRESENT_ELECTRONIC_ORDER("5"),
     UNKNOWN("9");
 
-    private final String value;
+    private final String code;
 
-    public static CardholderPresent fromValue(String val){
+    public static CardholderPresent fromCode(String code){
         return Arrays.stream(CardholderPresent.values())
-                .filter(c -> c.getValue().equals(val))
+                .filter(c -> c.getCode().equals(code))
                 .findFirst()
-                .orElseThrow(()-> new IllegalArgumentException("Unknown value " + val));
+                .orElseThrow(()-> new IllegalArgumentException("Unknown code " + code));
     }
 }

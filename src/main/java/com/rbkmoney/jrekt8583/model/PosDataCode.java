@@ -22,17 +22,17 @@ public class PosDataCode {
 
     @Override
     public String toString() {
-        return cardDataInputCapability.getValue() +
-                cardholderAuthenticationCapability.getValue() +
-                cardCaptureCapability.getValue() +
-                operatingEnvironment.getValue() +
-                cardholderPresent.getValue() +
-                cardPresent.getValue() +
-                cardDataInputMode.getValue() +
-                cardholderAuthenticationMethod.getValue() +
-                cardholderAuthenticationEntity.getValue() +
-                cardDataOutputCapability.getValue() +
-                terminalOutputCapability.getValue() +
-                pinCaptureCapability.getValue();
+        return cardDataInputCapability.getCode() +
+                cardholderAuthenticationCapability.getCode() +
+                cardCaptureCapability.getCode() +
+                operatingEnvironment.getCode() +
+                cardholderPresent.getCode() +
+                cardPresent.getCode() +
+                cardDataInputMode.getCode() +
+                cardholderAuthenticationMethod.getCode() +
+                cardholderAuthenticationEntity.getCode() +
+                cardDataOutputCapability.getCode() +
+                terminalOutputCapability.getCode() +
+                pinCaptureCapability.getCode();
     }
 }

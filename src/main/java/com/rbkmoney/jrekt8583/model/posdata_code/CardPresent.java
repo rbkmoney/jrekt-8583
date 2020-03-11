@@ -11,5 +11,5 @@ public enum CardPresent {
     CARDHOLDER_PRESENT("1"),
     UNKNOWN("9");
 
-    private final String value;
+    private final String code;
 }

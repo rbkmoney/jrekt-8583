@@ -10,9 +10,9 @@ public class ProcessingCode {
 
     @Override
     public String toString() {
-        return transactionCode.getValue() +
-                fromAccountType.getValue() +
-                toAccountType.getValue();
+        return transactionCode.getCode() +
+                fromAccountType.getCode() +
+                toAccountType.getCode();
     }
 
     public static ProcessingCode buildWithPrimaryAccount(TransactionCode transactionCode) {

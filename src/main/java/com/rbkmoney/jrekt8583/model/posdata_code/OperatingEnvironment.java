@@ -25,5 +25,5 @@ public enum OperatingEnvironment {
     TRANSIT_ACCESS_TERMINAL("Z"),
     MOBILE_ACCEPTANCE_SOLUTION("M");
 
-    private final String value;
+    private final String code;
 }

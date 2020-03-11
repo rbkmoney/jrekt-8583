@@ -15,5 +15,5 @@ public enum CardholderAuthenticationMethod {
     UNKNOWN("9"),
     TOKENIZATION_REQUEST("T");
 
-    private final String value;
+    private final String code;
 }

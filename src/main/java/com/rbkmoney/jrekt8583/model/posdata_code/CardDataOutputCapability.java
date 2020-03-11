@@ -11,5 +11,5 @@ public enum CardDataOutputCapability {
     MAGNETIC_STRIPE_WRITE("2"),
     SMART_CARD_WRITE("3");
 
-    private final String value;
+    private final String code;
 }
