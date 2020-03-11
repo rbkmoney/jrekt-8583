@@ -8,8 +8,7 @@ public class ProcessingCode {
     private AccountType fromAccountType;
     private AccountType toAccountType;
 
-    @Override
-    public String toString() {
+    public String toIsoString() {
         return transactionCode.getCode() +
                 fromAccountType.getCode() +
                 toAccountType.getCode();

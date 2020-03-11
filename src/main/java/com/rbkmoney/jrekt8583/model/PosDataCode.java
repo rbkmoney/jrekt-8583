@@ -20,8 +20,7 @@ public class PosDataCode {
     private TerminalOutputCapability terminalOutputCapability;
     private PINCaptureCapability pinCaptureCapability;
 
-    @Override
-    public String toString() {
+    public String toIsoString() {
         return cardDataInputCapability.getCode() +
                 cardholderAuthenticationCapability.getCode() +
                 cardCaptureCapability.getCode() +
