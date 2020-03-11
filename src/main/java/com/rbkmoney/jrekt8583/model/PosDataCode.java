@@ -3,11 +3,9 @@ package com.rbkmoney.jrekt8583.model;
 import com.rbkmoney.jrekt8583.model.posdata_code.*;
 import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Data
 @Builder
-@NoArgsConstructor
 public class PosDataCode {
     private CardDataInputCapability cardDataInputCapability;
     private CardholderAuthenticationCapability cardholderAuthenticationCapability;
