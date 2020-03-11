@@ -1,4 +1,4 @@
-package com.rbkmoney.jrekt8583;
+package com.rbkmoney.jrekt8583.model;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

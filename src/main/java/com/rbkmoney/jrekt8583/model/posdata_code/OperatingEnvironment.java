@@ -1,0 +1,29 @@
+package com.rbkmoney.jrekt8583.model.posdata_code;
+
+
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+
+@Getter
+@RequiredArgsConstructor
+public enum OperatingEnvironment {
+    NO_TERMINAL_USED("0"),
+    ON_PREMISES_OF_CARD_ACCEPTOR_ATTENDED("1"),
+    ON_PREMISES_OF_CARD_ACCEPTOR_UNATTENDED("2"),
+    OFF_PREMISES_OF_CARD_ACCEPTOR_ATTENDED("3"),
+    OFF_PREMISES_OF_CARD_ACCEPTOR_UNATTENDED("4"),
+    ON_PREMISES_OF_CARD_HOLDER_UNATTENDED("5"),
+    OFF_PREMISES_OF_CARDHOLDER_UNATTENDED("6"),
+    UNKNOWN_NOT_SUGGESTED("9"),
+    CAT_LEVEL_1_UNATTENDED("S"),
+    CAT_LEVEL_2_UNATTENDED("T"),
+    CAT_LEVEL_3_UNATTENDED("U"),
+    CAT_LEVEL_4_UNATTENDED("V"),
+    CAT_LEVEL_7_TRANSPONDER_INITIATED("R"),
+    ELECTRONIC_DELIVERY_OF_PRODUCT("W"),
+    PHYSICAL_DELIVERY_OF_PRODUCT("Y"),
+    TRANSIT_ACCESS_TERMINAL("Z"),
+    MOBILE_ACCEPTANCE_SOLUTION("M");
+
+    private final String value;
+}

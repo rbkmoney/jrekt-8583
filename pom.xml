@@ -11,7 +11,7 @@
 
     <groupId>com.rbkmoney.jrekt8583</groupId>
     <artifactId>netty-iso8583</artifactId>
-    <version>0.2.8</version>
+    <version>0.2.9</version>
 
     <name>ISO8583 Connector for Netty</name>
     <description>
